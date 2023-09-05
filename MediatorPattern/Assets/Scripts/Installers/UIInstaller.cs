@@ -26,7 +26,7 @@ public class UIInstaller : MonoInstaller
 
     private void BindLevelView()
     {
-        Container.Bind<TMP_Text>().WithId("LevelText").FromInstance(_levelText).AsSingle();
+        Container.Bind<TMP_Text>().WithId(Constants.LevelText).FromInstance(_levelText).AsSingle();
         Container.Bind<Slider>().FromInstance(_experienceSlider).AsSingle();
     }
 
