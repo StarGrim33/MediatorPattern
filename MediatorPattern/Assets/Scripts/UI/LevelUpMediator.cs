@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class LevelUpMediator : MonoBehaviour
 {
-    [SerializeField] private Button _button;
-
+    private Button _button;
     private PlayerLevelSystem _playerLevelSystem;
     private PlayerHealth _playerHealth;
     private int _experiencePerClick = 25;
@@ -20,8 +20,10 @@ public class LevelUpMediator : MonoBehaviour
         _playerLevelSystem.OnLevelChanged -= OnLevelChanged;
     }
 
-    public void Init(PlayerLevelSystem playerLevelSystem, PlayerHealth playerHealth)
+    [Inject]
+    public void Construct(PlayerLevelSystem playerLevelSystem, PlayerHealth playerHealth, Button button)
     {
+        _button = button;
         _playerLevelSystem = playerLevelSystem;
         _playerHealth = playerHealth;
         _playerLevelSystem.OnLevelChanged += OnLevelChanged;

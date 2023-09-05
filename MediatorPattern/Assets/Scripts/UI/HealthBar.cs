@@ -1,12 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
+using Zenject;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Transform _healthFillRectTransform;
-    [SerializeField] private float _maxWidth;
+    private Transform _healthFillRectTransform;
     private PlayerLevelSystem _levelSystem;
     private PlayerHealth _playerHealth;
+    private float _maxWidth;
 
     private void Start()
     {
@@ -19,10 +19,13 @@ public class HealthBar : MonoBehaviour
         _playerHealth.OnHealthChanged -= UpdateHealthBar;
     }
 
-    public void Init(PlayerLevelSystem playerLevelSystem, PlayerHealth playerHealth)
+    [Inject]
+    public void Construct(PlayerLevelSystem playerLevelSystem, PlayerHealth playerHealth, Transform healthFillRectTransform, float maxWidth)
     {
         _levelSystem = playerLevelSystem;
         _playerHealth = playerHealth;
+        _maxWidth = maxWidth;
+        _healthFillRectTransform = healthFillRectTransform;
     }
 
     private void UpdateHealthBar(float currentHealth, float maxHealth)

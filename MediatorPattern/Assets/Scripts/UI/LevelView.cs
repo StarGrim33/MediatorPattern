@@ -2,11 +2,12 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class LevelView : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _levelText;
-    [SerializeField] private Slider _experienceSlider;
+    private TMP_Text _levelText;
+    private Slider _experienceSlider;
     private PlayerLevelSystem _levelSystem;
 
     private void OnDisable()
@@ -15,9 +16,12 @@ public class LevelView : MonoBehaviour
         _levelSystem.OnLevelChanged -= OnLevelChanged;
     }
 
-    public void Init(PlayerLevelSystem playerLevelSystem)
+    [Inject]
+    public void Construct(PlayerLevelSystem playerLevelSystem, [Inject(Id = "LevelText")] TMP_Text text, Slider slider)
     {
+        _levelText = text;
         _levelSystem = playerLevelSystem;
+        _experienceSlider = slider;
         _levelSystem.OnExperienceChanged += OnExperienceChanged;
         _levelSystem.OnLevelChanged += OnLevelChanged;
         SetStartValue();
